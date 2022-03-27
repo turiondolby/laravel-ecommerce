@@ -11,6 +11,11 @@ class Variation extends Model
     use HasFactory;
     use HasRecursiveRelationships;
 
+     public function formattedPrice()
+    {
+        return money($this->price);
+    }
+
     public function product()
     {
         return $this->belongsTo(Product::class);
