@@ -13,6 +13,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^2.10",
+        "spatie/laravel-medialibrary": "^9.0.0",
         "staudenmeir/laravel-adjacency-list": "^1.0"
     },
     "require-dev": {
