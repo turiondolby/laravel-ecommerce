@@ -9,6 +9,7 @@ use Illuminate\Session\SessionManager;
 
 class Cart implements CartInterface
 {
+    protected $instance;
     protected $session;
 
     public function __construct(SessionManager $session)
@@ -46,6 +47,10 @@ class Cart implements CartInterface
 
     protected function instance()
     {
+        if ($this->instance) {
+            return $this->instance;
+        }
+        
         return ModelsCart::whereUuid($this->session->get(config('cart.session.key')))->first();
     }
 
