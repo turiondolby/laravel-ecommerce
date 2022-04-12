@@ -655,6 +655,10 @@ select {
   margin-left: auto;
   margin-right: auto;
 }
+.mx-1 {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
 .ml-3 {
   margin-left: 0.75rem;
 }
@@ -706,11 +710,11 @@ select {
 .mt-1 {
   margin-top: 0.25rem;
 }
-.-mt-3 {
-  margin-top: -0.75rem;
-}
 .mr-4 {
   margin-right: 1rem;
+}
+.-mt-3 {
+  margin-top: -0.75rem;
 }
 .block {
   display: block;

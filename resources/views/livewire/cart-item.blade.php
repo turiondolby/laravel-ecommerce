@@ -12,7 +12,9 @@
                 <div>{{ $variation->product->title }}</div>
 
                 <div class="flex items-center text-sm">
-                    Variation specifics
+                    @foreach ($variation->ancestorsAndSelf as $ancestor)
+                        {{ $ancestor->title }} @if (! $loop->last) <span class="text-gray-400 mx-1">/</span> @endif
+                    @endforeach
                 </div>
             </div>
         </div>
