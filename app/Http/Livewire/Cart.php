@@ -7,6 +7,10 @@ use App\Cart\Contracts\CartInterface;
 
 class Cart extends Component
 {
+    protected $listeners = [
+        'cart.updated' => '$refresh'
+    ];
+
     public function render(CartInterface $cart)
     {
         return view('livewire.cart', compact('cart'));

@@ -27,6 +27,17 @@ class CartItem extends Component
         ]);
     }
 
+    public function remove(CartInterface $cart)
+    {
+        $cart->remove($this->variation);
+
+        $this->emit('cart.updated');
+
+        $this->dispatchBrowserEvent('notification', [
+            'body' => $this->variation->product->title . ' removed from cart.'
+        ]);
+    }
+
     public function render()
     {
         return view('livewire.cart-item');
