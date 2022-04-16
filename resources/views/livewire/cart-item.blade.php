@@ -22,7 +22,7 @@
         <div class="flex items-center space-x-4">
             <div class="text-sm flex items-center space-x-2">
                 <div class="font-semibold">Quantity</div>
-                <select class="text-sm border-none">
+                <select wire:model="quantity" class="text-sm border-none">
                     @for($quantity = 1; $quantity <= $variation->stockCount(); $quantity++)
                         <option value="{{ $quantity }}">{{ $quantity }}</option>
                     @endfor
