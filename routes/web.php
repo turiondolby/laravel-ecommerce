@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CartIndexController;
 use App\Http\Controllers\ProductShowController;
+use App\Http\Controllers\CategoryShowController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,8 @@ use App\Http\Controllers\ProductShowController;
 Route::get('/', HomeController::class);
 
 Route::get('/cart', CartIndexController::class);
+
+Route::get('/categories/{category:slug}', CategoryShowController::class);
 
 Route::get('/products/{product:slug}', ProductShowController::class);
 
