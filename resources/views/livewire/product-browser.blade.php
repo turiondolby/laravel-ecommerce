@@ -3,11 +3,13 @@
         <div class="space-y-6">
             <div class="space-y-1">
                 <ul>
-                    <li>
-                        <a href="" class="text-indigo-500">
-                            Category child
-                        </a>
-                    </li>
+                    @foreach($category->children as $child)
+                        <li>
+                            <a href="/categories/{{ $child->slug }}" class="text-indigo-500">
+                                {{ $child->title }}
+                            </a>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
 
@@ -36,13 +38,13 @@
         <div class="overflow-hidden sm:rounded-lg grid lg:grid-cols-3 md:grid-cols-2 gap-4">
             @foreach($products as $product)
                 <a href="/products/{{ $product->slug }}" class="p-6 bg-white border-b border-gray-200 space-y-4">
-                <img src="{{ $product->getFirstMediaUrl() }}" class="w-full">
+                    <img src="{{ $product->getFirstMediaUrl() }}" class="w-full">
 
-                <div class="space-y-1">
-                    <div>{{ $product->title }}</div>
-                    <div class="font-semibold text-lg">{{ $product->formattedPrice() }}</div>
-                </div>
-            </a>
+                    <div class="space-y-1">
+                        <div>{{ $product->title }}</div>
+                        <div class="font-semibold text-lg">{{ $product->formattedPrice() }}</div>
+                    </div>
+                </a>
             @endforeach
         </div>
     </div>
