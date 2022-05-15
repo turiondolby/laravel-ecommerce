@@ -10,4 +10,9 @@ class Category extends Model
 {
     use HasFactory;
     use HasRecursiveRelationships;
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
+    }
 }

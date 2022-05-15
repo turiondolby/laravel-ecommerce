@@ -50,6 +50,7 @@ class Product extends Model implements HasMedia
             'title' => $this->title,
             'slug' => $this->slug,
             'price' => $this->price,
+            'category_ids' => $this->categories->pluck('id')->toArray(),
         ];
     }
 }
