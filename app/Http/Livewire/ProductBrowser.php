@@ -11,14 +11,22 @@ class ProductBrowser extends Component
 
     public function render()
     {
-        $products = Product::search('', function ($meilisearch, $query, $options) {
+        $search = Product::search('', function ($meilisearch, $query, $options) {
             $options['filter'] = 'category_ids = ' . $this->category->id;
 
-            return $meilisearch->search($query);
-        })->get();
+            $options['facetsDistribution'] = ['size', 'color']; //refactor
+
+            return $meilisearch->search($query, $options);
+        })
+            ->raw();
+
+        $products = $this->category->products->find(
+            collect($search['hits'])->pluck('id')
+        );
 
         return view('livewire.product-browser', [
-            'products' => $products
+            'products' => $products,
+            'filters' => $search['facetsDistribution']
         ]);
     }
 }
