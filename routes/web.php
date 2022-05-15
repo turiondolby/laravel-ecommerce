@@ -17,7 +17,7 @@ use App\Http\Controllers\CategoryShowController;
 |
 */
 
-Route::get('/', HomeController::class);
+Route::get('/', HomeController::class)->name('home');
 
 Route::get('/cart', CartIndexController::class);
 
