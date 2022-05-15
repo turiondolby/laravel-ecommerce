@@ -45,12 +45,19 @@ class Product extends Model implements HasMedia
 
     public function toSearchableArray()
     {
-        return [
+        return array_merge([
             'id' => $this->id,
             'title' => $this->title,
             'slug' => $this->slug,
             'price' => $this->price,
             'category_ids' => $this->categories->pluck('id')->toArray(),
-        ];
+        ], $this->variations->groupBy('type')
+            ->mapWithKeys(function ($variation, $key) {
+                return [
+                    $key => $variation->pluck('title')
+                ];
+            })
+            ->toArray()
+        );
     }
 }
