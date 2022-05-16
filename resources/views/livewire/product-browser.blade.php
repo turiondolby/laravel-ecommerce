@@ -26,7 +26,8 @@
                         <div class="font-semibold">{{ Str::title($title) }}</div>
                         @foreach($filter as $option => $count)
                             <div class="flex items-center space-x-2">
-                                <input type="checkbox" id="" value=""> <label for="">{{ $option }} ({{ $count }})</label>
+                                <input wire:model="queryFilters.{{ $title }}" type="checkbox" id="{{ $title }}_{{ strtolower($option) }}" value="{{ $option }}">
+                                <label for="{{ $title }}_{{ strtolower($option) }}">{{ $option }} ({{ $count }})</label>
                             </div>
                         @endforeach
                     </div>

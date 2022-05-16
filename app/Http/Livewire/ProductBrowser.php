@@ -9,6 +9,20 @@ class ProductBrowser extends Component
 {
     public $category;
 
+    public $queryFilters = [];
+
+    public function mount()
+    {
+        $this->queryFilters = $this->category->products->pluck('variations')
+            ->flatten()
+            ->groupBy('type')
+            ->keys()
+            ->mapWithKeys(function ($key) {
+                return [$key => []];
+            })
+        ->toArray();
+    }
+
     public function render()
     {
         $search = Product::search('', function ($meilisearch, $query, $options) {
