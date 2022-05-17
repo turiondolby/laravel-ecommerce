@@ -11,6 +11,10 @@ class ProductBrowser extends Component
 
     public $queryFilters = [];
 
+    public $priceRage = [
+        'max' => null
+    ];
+
     public function mount()
     {
         $this->queryFilters = $this->category->products->pluck('variations')
@@ -39,8 +43,14 @@ class ProductBrowser extends Component
 
             $options['facetsDistribution'] = ['size', 'color']; //refactor
 
+            $options['filter'] = null;
+
             if ($filters) {
                 $options['filter'] = $filters;
+            }
+
+            if ($this->priceRage['max']) {
+                $options['filter'] .= (isset($options['filter']) ? ' AND ' : '') . 'price <= ' . $this->priceRage['max'];
             }
 
             return $meilisearch->search($query, $options);
@@ -51,9 +61,14 @@ class ProductBrowser extends Component
             collect($search['hits'])->pluck('id')
         );
 
+        $maxPrice = $this->category->products->max('price');
+
+        $this->priceRage['max'] = $this->priceRage['max'] ?: $maxPrice;
+
         return view('livewire.product-browser', [
             'products' => $products,
-            'filters' => $search['facetsDistribution']
+            'filters' => $search['facetsDistribution'],
+            'maxPrice' => $maxPrice
         ]);
     }
 }
