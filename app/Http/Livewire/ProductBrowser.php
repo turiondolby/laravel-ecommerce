@@ -20,15 +20,28 @@ class ProductBrowser extends Component
             ->mapWithKeys(function ($key) {
                 return [$key => []];
             })
-        ->toArray();
+            ->toArray();
     }
 
     public function render()
     {
         $search = Product::search('', function ($meilisearch, $query, $options) {
-            $options['filter'] = 'category_ids = ' . $this->category->id;
+            $filters = collect($this->queryFilters)
+                ->filter()
+                ->recursive()
+                ->map(function ($value, $key) {
+                    return $value->map(function ($value) use ($key) {
+                        return $key . ' = "' . $value . '"';
+                    });
+                })
+                ->flatten()
+                ->join(' AND ');
 
             $options['facetsDistribution'] = ['size', 'color']; //refactor
+
+            if ($filters) {
+                $options['filter'] = $filters;
+            }
 
             return $meilisearch->search($query, $options);
         })
