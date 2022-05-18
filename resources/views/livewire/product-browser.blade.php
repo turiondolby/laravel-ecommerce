@@ -14,12 +14,14 @@
             </div>
 
             <div class="space-y-6">
-                <div class="space-y-1">
-                    <div class="font-semibold">Max price ({{ money($priceRage['max']) }})</div>
-                    <div class="flex items-center space-x-2">
-                        <input wire:model="priceRage.max" type="range" min="0" max="{{ $maxPrice }}">
+                @if($category->products->count())
+                    <div class="space-y-1">
+                        <div class="font-semibold">Max price ({{ money($priceRage['max']) }})</div>
+                        <div class="flex items-center space-x-2">
+                            <input wire:model="priceRage.max" type="range" min="0" max="{{ $maxPrice }}">
+                        </div>
                     </div>
-                </div>
+                @endif
 
                 @if ($products->count())
                     @foreach($filters as $title => $filter)
