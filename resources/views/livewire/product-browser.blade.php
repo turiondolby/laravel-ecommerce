@@ -28,9 +28,11 @@
                             @foreach($filter as $option => $count)
                                 <div class="flex items-center space-x-2">
                                     <input wire:model="queryFilters.{{ $title }}" type="checkbox"
-                                           id="{{ $title }}_{{ strtolower($option) }}" value="{{ $option }}">
-                                    <label for="{{ $title }}_{{ strtolower($option) }}">{{ $option }} ({{ $count }}
-                                        )</label>
+                                           id="{{ $title }}_{{ strtolower($option) }}" value="{{ $option }}"
+                                    >
+                                    <label for="{{ $title }}_{{ strtolower($option) }}">
+                                        {{ $option }} ({{ $count }})
+                                    </label>
                                 </div>
                             @endforeach
                         </div>
