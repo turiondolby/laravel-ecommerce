@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Laravel\Scout\Searchable;
 use Spatie\Image\Manipulations;
+use App\Models\Scopes\LiveScope;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -15,6 +16,11 @@ class Product extends Model implements HasMedia
     use HasFactory;
     use InteractsWithMedia;
     use Searchable;
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new LiveScope());
+    }
 
     public function formattedPrice()
     {
