@@ -57,8 +57,12 @@
                 <div class="font-semibold text-lg">Delivery</div>
 
                 <div class="space-y-1">
-                    <x-select class="w-full">
-                        <option>Shipping type ($0)</option>
+                    <x-select wire:model="shippingTypeId" class="w-full">
+                        @foreach($shippingTypes as $shippingType)
+                            <option value="{{ $shippingType->id }}">
+                                {{ $shippingType->title }} ({{ $shippingType->formattedPrice() }})
+                            </option>
+                        @endforeach
                     </x-select>
                 </div>
             </div>
@@ -115,8 +119,8 @@
                     </div>
 
                     <div class="space-y-1 flex items-center justify-between">
-                        <div class="font-semibold">Shipping (Shipping type)</div>
-                        <h1 class="font-semibold">$0</h1>
+                        <div class="font-semibold">Shipping ({{ $this->shippingType->title }})</div>
+                        <h1 class="font-semibold">{{ $this->shippingType->formattedPrice() }}</h1>
                     </div>
 
                     <div class="space-y-1 flex items-center justify-between">

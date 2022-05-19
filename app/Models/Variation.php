@@ -16,7 +16,7 @@ class Variation extends Model implements HasMedia
     use InteractsWithMedia;
     use HasRecursiveRelationships;
 
-     public function formattedPrice()
+    public function formattedPrice()
     {
         return money($this->price);
     }
