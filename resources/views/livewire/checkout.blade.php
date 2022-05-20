@@ -1,18 +1,24 @@
-<form>
+<form wire:submit.prevent="checkout">
     <div class="overflow-hidden sm:rounded-lg grid grid-cols-6 grid-flow-col gap-4">
         <div class="p-6 bg-white border-b border-gray-200 col-span-3 self-start space-y-6">
-            <div class="space-y-3">
-                <div class="font-semibold text-lg">Account details</div>
+            @guest
+                <div class="space-y-3">
+                    <div class="font-semibold text-lg">Account details</div>
 
-                <div>
-                    <label for="email">Email</label>
-                    <x-input id="email" class="block mt-1 w-full" type="text" name="email"/>
+                    <div>
+                        {{ print_r($accountForm) }}
+                        <label for="email">Email</label>
+                        <x-input wire:model.defer="accountForm.email" id="email" class="block mt-1 w-full" type="text"
+                                 name="email"/>
 
-                    <div class="mt-2 font-semibold text-red-500">
-                        An error
+                        @error('accountForm.email')
+                            <div class="mt-2 font-semibold text-red-500">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                 </div>
-            </div>
+            @endguest
 
             <div class="space-y-3">
                 <div class="font-semibold text-lg">Shipping</div>
