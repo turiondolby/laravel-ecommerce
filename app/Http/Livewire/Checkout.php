@@ -16,18 +16,32 @@ class Checkout extends Component
       'email' => ''
     ];
 
+    public $shippingForm = [
+        'address' => '',
+        'city' => '',
+        'postcode' => '',
+    ];
+
     protected $validationAttributes = [
         'accountForm.email' => 'email address',
+        'shippingForm.address' => 'shipping address',
+        'shippingForm.city' => 'shipping city',
+        'shippingForm.postcode' => 'shipping postal code',
     ];
 
     protected $messages = [
         'accountForm.email.unique' => 'Seems you already have an account. Please sign in to place an order.',
+        'shippingForm.address.required' => 'Your :attribute is required.',
     ];
 
     public function rules()
     {
         return [
-            'accountForm.email' => 'required|email|max:255|unique:users,email' . (auth()->user() ? ',' . auth()->id() : '')
+            'accountForm.email' => 'required|email|max:255|unique:users,email' . (auth()->user() ? ',' . auth()->id() : ''),
+            'shippingForm.address' => 'required|max:255',
+            'shippingForm.city' => 'required|max:255',
+            'shippingForm.postcode' => 'required|max:255',
+            'shippingTypeId' => 'required|exists:shipping_types,id',
         ];
     }
 
