@@ -15,6 +15,15 @@ class ShippingAddress extends Model
         'postcode',
     ];
 
+    public function formattedAddress()
+    {
+        return sprintf('%s, %s, %s',
+            $this->address,
+            $this->city,
+            $this->postcode
+        );
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
