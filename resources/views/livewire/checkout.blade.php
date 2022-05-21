@@ -22,12 +22,14 @@
             <div class="space-y-3">
                 <div class="font-semibold text-lg">Shipping</div>
 
-                <x-select wire:model="userShippingAddressId" class="w-full">
-                    <option value="">Choose a pre-saved address</option>
-                    @foreach($this->userShippingAddresses as $address)
-                        <option value="{{ $address->id }}">{{ $address->formattedAddress() }}</option>
-                    @endforeach
-                </x-select>
+                @if ($this->userShippingAddresses)
+                    <x-select wire:model="userShippingAddressId" class="w-full">
+                        <option value="">Choose a pre-saved address</option>
+                        @foreach($this->userShippingAddresses as $address)
+                            <option value="{{ $address->id }}">{{ $address->formattedAddress() }}</option>
+                        @endforeach
+                    </x-select>
+                @endif
 
                 <div class="space-y-3">
                     <div>
