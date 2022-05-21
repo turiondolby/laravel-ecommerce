@@ -6,7 +6,6 @@
                     <div class="font-semibold text-lg">Account details</div>
 
                     <div>
-                        {{ print_r($accountForm) }}
                         <label for="email">Email</label>
                         <x-input wire:model.defer="accountForm.email" id="email" class="block mt-1 w-full" type="text"
                                  name="email"/>
