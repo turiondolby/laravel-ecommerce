@@ -2,11 +2,13 @@
 
 namespace App\Cart;
 
+use Exception;
 use App\Models\User;
 use App\Models\Variation;
 use App\Models\Cart as ModelsCart;
 use App\Cart\Contracts\CartInterface;
 use Illuminate\Session\SessionManager;
+use App\Cart\Exceptions\QuantityNoLongerAvailableException;
 
 class Cart implements CartInterface
 {
@@ -96,6 +98,15 @@ class Cart implements CartInterface
     public function isEmpty()
     {
         return $this->contentsCount() === 0;
+    }
+
+    public function verifyAvailableQuantities()
+    {
+        $this->instance()->variations->each(function ($variation) {
+            if ($variation->pivot->quantity > $variation->stocks->sum('amount')) {
+                throw new QuantityNoLongerAvailableException('Stock reduced');
+            }
+        });
     }
 
     public function subtotal()
