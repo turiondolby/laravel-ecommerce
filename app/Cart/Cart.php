@@ -2,7 +2,6 @@
 
 namespace App\Cart;
 
-use Exception;
 use App\Models\User;
 use App\Models\Variation;
 use App\Models\Cart as ModelsCart;
