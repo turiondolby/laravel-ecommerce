@@ -53,6 +53,11 @@ class Cart implements CartInterface
         return $this->instance()->variations->find($variation->id);
     }
 
+    protected function clearInstanceCache()
+    {
+        $this->instance = null;
+    }
+
     protected function instance()
     {
         if ($this->instance) {
@@ -107,6 +112,27 @@ class Cart implements CartInterface
                 throw new QuantityNoLongerAvailableException('Stock reduced');
             }
         });
+    }
+
+    public function syncAvailableQuantities()
+    {
+        $syncedQuantities = $this->instance()->variations->mapWithKeys(function ($variation) {
+            $quantity = $variation->pivot->quantity > $variation->stocks->sum('count')
+                ? $variation->stockCount()
+                : $variation->pivot->quantity;
+
+            return [
+                $variation->id => [
+                    'quantity' => $quantity
+                ]
+            ];
+        })->reject(function ($syncedQuantity) {
+            return $syncedQuantity['quantity'] < 1;
+        })->toArray();
+
+        $this->instance()->variations()->sync($syncedQuantities);
+
+        $this->clearInstanceCache();
     }
 
     public function subtotal()

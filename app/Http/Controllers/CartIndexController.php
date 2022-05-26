@@ -12,7 +12,9 @@ class CartIndexController extends Controller
         try {
             $cart->verifyAvailableQuantities();
         } catch (QuantityNoLongerAvailableException $e) {
+            $cart->syncAvailableQuantities();
         }
+
         return view('cart.index');
     }
 }
