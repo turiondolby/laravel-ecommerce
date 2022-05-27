@@ -93,6 +93,16 @@ class Checkout extends Component
         $order->shippingAddress()->associate($this->shippingAddress);
 
         $order->save();
+
+        $order->variations()->attach(
+            $cart->contents()->mapWithKeys(function ($variation) {
+                return [
+                    $variation->id => [
+                        'quantity' => $variation->pivot->quantity
+                    ]
+                ];
+            })->toArray()
+        );
     }
 
     public function mount()
