@@ -12,12 +12,12 @@ return new class extends Migration {
             $table->uuid('uuid');
             $table->string('email');
             $table->foreignId('user_id')->nullable()->constrained();
-            $table->foreignId('shipping_addresses_id')->constrained();
+            $table->foreignId('shipping_address_id')->constrained();
             $table->foreignId('shipping_type_id')->constrained();
             $table->integer('subtotal');
-            $table->timestamp('placed_at');
-            $table->timestamp('packaged_at');
-            $table->timestamp('shipped_at');
+            $table->timestamp('placed_at')->nullable();
+            $table->timestamp('packaged_at')->nullable();
+            $table->timestamp('shipped_at')->nullable();
             $table->timestamps();
         });
     }

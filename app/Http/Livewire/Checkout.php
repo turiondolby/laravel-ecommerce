@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Order;
 use Livewire\Component;
 use App\Models\ShippingType;
 use App\Models\ShippingAddress;
@@ -65,16 +66,33 @@ class Checkout extends Component
         return optional(auth()->user())->shippingAddresses;
     }
 
-    public function checkout()
+    public function checkout(CartInterface $cart)
     {
         $this->validate();
 
-        $this->shippingAddress = optional(ShippingAddress::whereBelongsTo(auth()->user())->firstOrCreate($this->shippingForm))
+        $this->shippingAddress = ShippingAddress::query();
+
+        if (auth()->user()) {
+            $this->shippingAddress = $this->shippingAddress->whereBelongsTo(auth()->user());
+        }
+
+        $this->shippingAddress = $this->shippingAddress->firstOrCreate($this->shippingForm);
+
+        optional($this->shippingAddress)
             ->user()
             ->associate(auth()->user())
             ->save();
 
-        //
+        $order = Order::make(array_merge($this->accountForm, [
+            'subtotal' => $cart->subtotal()
+        ]));
+
+        $order->user()->associate(auth()->user());
+
+        $order->shippingType()->associate($this->shippingType);
+        $order->shippingAddress()->associate($this->shippingAddress);
+
+        $order->save();
     }
 
     public function mount()

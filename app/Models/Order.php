@@ -31,4 +31,19 @@ class Order extends Model
             $order->uuid = (string)Str::uuid();
         });
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function shippingType()
+    {
+        return $this->belongsTo(ShippingType::class);
+    }
+
+    public function shippingAddress()
+    {
+        return $this->belongsTo(ShippingAddress::class);
+    }
 }
