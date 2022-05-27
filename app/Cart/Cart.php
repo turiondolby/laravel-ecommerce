@@ -134,6 +134,11 @@ class Cart implements CartInterface
         $this->clearInstanceCache();
     }
 
+    public function removeAll()
+    {
+        $this->instance()->variations()->detach();
+    }
+
     public function subtotal()
     {
         return $this->instance()->variations
