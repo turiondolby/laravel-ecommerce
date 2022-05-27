@@ -39,7 +39,7 @@ class ProductBrowser extends Component
                     });
                 })
                 ->flatten()
-                ->join(' AND ');
+                ->join(' OR ');
 
             $options['facetsDistribution'] = ['size', 'color']; //refactor
 
