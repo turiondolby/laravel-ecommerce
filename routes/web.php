@@ -6,6 +6,7 @@ use App\Http\Controllers\CartIndexController;
 use App\Http\Controllers\ProductShowController;
 use App\Http\Controllers\CategoryShowController;
 use App\Http\Controllers\CheckoutIndexController;
+use App\Http\Controllers\OrderConfirmationIndexController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,12 @@ Route::get('checkout', CheckoutIndexController::class);
 Route::get('categories/{category:slug}', CategoryShowController::class);
 
 Route::get('products/{product:slug}', ProductShowController::class);
+
+Route::get('orders/{order:uuid}/confirmation', OrderConfirmationIndexController::class)->name('orders.confirmation');
+
+Route::get('orders', function () {
+    //
+})->name('orders');
 
 Route::get('dashboard', function () {
     return view('dashboard');
