@@ -24,25 +24,29 @@
                             </div>
                         </div>
 
-                        <div class="border-b py-3 space-y-2 flex items-center last:border-0 last:pb-0">
-                            <div class="w-16 mr-4">
-                                <img src="" class="w-16">
-                            </div>
-
-                            <div class="space-y-1">
-                                <div>
-                                    <div class="font-semibold">Formatted price</div>
-                                    <div>Variation product title</div>
+                        @foreach($order->variations as $variation)
+                            <div class="border-b py-3 space-y-2 flex items-center last:border-0 last:pb-0">
+                                <div class="w-16 mr-4">
+                                    <img src="{{ $variation->getFirstMediaUrl('default', 'thumb200x200') }}" class="w-16">
                                 </div>
 
-                                <div class="flex items-center text-sm">
-                                    <div class="mr-1 font-semibold">
-                                        Quantity: 0 <span class="text-gray-400 mx-1">/</span>
+                                <div class="space-y-1">
+                                    <div>
+                                        <div class="font-semibold">{{ $variation->formattedPrice() }}</div>
+                                        <div>{{ $variation->product->title }}</div>
                                     </div>
-                                    Variation title <span class="text-gray-400 mx-1">/</span>
+
+                                    <div class="flex items-center text-sm">
+                                        <div class="mr-1 font-semibold">
+                                            Quantity: {{ $variation->pivot->quantity }} <span class="text-gray-400 mx-1">/</span>
+                                        </div>
+                                        @foreach($variation->ancestorsAndSelf as $ancestor)
+                                            {{ $ancestor->title }} @if(! $loop->last) <span class="text-gray-400 mx-1">/</span> @endif
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endforeach
                     </div>
                 @empty
                     No orders

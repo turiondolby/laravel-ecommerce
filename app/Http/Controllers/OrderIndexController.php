@@ -13,7 +13,10 @@ class OrderIndexController extends Controller
 
     public function __invoke(Request $request)
     {
-        $orders = $request->user()->orders()->latest()->get();
+        $orders = $request->user()->orders()->latest()
+            ->with('variations.product', 'variations.media', 'variations.ancestorsAndSelf', 'shippingType')
+            ->get();
+
         return view('orders.index', compact('orders'));
     }
 }
