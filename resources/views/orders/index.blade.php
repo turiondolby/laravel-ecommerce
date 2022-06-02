@@ -19,7 +19,13 @@
                             <div>
                             <span
                                 class="inline-flex items-center px-3 py-1 text-sm rounded-full font-semibold bg-gray-100 text-gray-800">
-                              Order status
+                                @if($order->status() === 'placed_at')
+                                    Order placed
+                                @elseif($order->status() === 'packaged_at')
+                                    Order packaged
+                                @elseif($order->status() === 'shipped_at')
+                                    Order shipped
+                                @endif
                             </span>
                             </div>
                         </div>
@@ -27,7 +33,8 @@
                         @foreach($order->variations as $variation)
                             <div class="border-b py-3 space-y-2 flex items-center last:border-0 last:pb-0">
                                 <div class="w-16 mr-4">
-                                    <img src="{{ $variation->getFirstMediaUrl('default', 'thumb200x200') }}" class="w-16">
+                                    <img src="{{ $variation->getFirstMediaUrl('default', 'thumb200x200') }}"
+                                         class="w-16">
                                 </div>
 
                                 <div class="space-y-1">
@@ -38,10 +45,13 @@
 
                                     <div class="flex items-center text-sm">
                                         <div class="mr-1 font-semibold">
-                                            Quantity: {{ $variation->pivot->quantity }} <span class="text-gray-400 mx-1">/</span>
+                                            Quantity: {{ $variation->pivot->quantity }} <span
+                                                class="text-gray-400 mx-1">/</span>
                                         </div>
                                         @foreach($variation->ancestorsAndSelf as $ancestor)
-                                            {{ $ancestor->title }} @if(! $loop->last) <span class="text-gray-400 mx-1">/</span> @endif
+                                            {{ $ancestor->title }} @if(! $loop->last)
+                                                <span class="text-gray-400 mx-1">/</span>
+                                            @endif
                                         @endforeach
                                     </div>
                                 </div>
