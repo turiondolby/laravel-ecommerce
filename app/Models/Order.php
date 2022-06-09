@@ -30,7 +30,7 @@ class Order extends Model
         'shipped_at' => 'datetime'
     ];
 
-    protected $statuses = [
+    public $statuses = [
         'placed_at',
         'packaged_at',
         'shipped_at'
