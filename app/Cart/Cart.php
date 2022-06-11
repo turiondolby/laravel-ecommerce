@@ -29,6 +29,13 @@ class Cart implements CartInterface
         $this->session->forget(config('cart.session.key'));
     }
 
+    public function associate(User $user)
+    {
+        $this->instance->user()->associate($user);
+
+        $this->instance->save();
+    }
+
     public function create(?User $user = null)
     {
         $instance = ModelsCart::make();
