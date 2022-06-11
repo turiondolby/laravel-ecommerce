@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Presenters\OrderPresenter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
@@ -77,5 +78,10 @@ class Order extends Model
         return $this->belongsToMany(Variation::class)
             ->withPivot(['quantity'])
             ->withTimestamps();
+    }
+
+    public function presenter()
+    {
+        return new OrderPresenter($this);
     }
 }

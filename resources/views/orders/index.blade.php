@@ -19,13 +19,7 @@
                             <div>
                             <span
                                 class="inline-flex items-center px-3 py-1 text-sm rounded-full font-semibold bg-gray-100 text-gray-800">
-                                @if($order->status() === 'placed_at')
-                                    Order placed
-                                @elseif($order->status() === 'packaged_at')
-                                    Order packaged
-                                @elseif($order->status() === 'shipped_at')
-                                    Order shipped
-                                @endif
+                                {{ $order->presenter()->status() }}
                             </span>
                             </div>
                         </div>
