@@ -21,7 +21,7 @@ class Checkout extends Component
     public $userShippingAddressId;
 
     public $accountForm = [
-      'email' => ''
+        'email' => ''
     ];
 
     public $shippingForm = [
@@ -146,10 +146,37 @@ class Checkout extends Component
         return $cart->subtotal() + $this->shippingType->price;
     }
 
+    public function getPaymentIntent(CartInterface $cart)
+    {
+        if ($cart->hasPaymentIntent()) {
+            $paymentIntent = app('stripe')->paymentIntents->retrieve($cart->getPaymentIntentId());
+
+            if ($paymentIntent->status !== 'succeeded') {
+                app('stripe')->paymentIntents->update($cart->getPaymentIntentId(), [
+                    'amount' => (int)$this->total,
+                ]);
+            }
+
+            return $paymentIntent;
+        }
+
+
+        $paymentIntent = app('stripe')->paymentIntents->create([
+            'amount' => (int)$this->total,
+            'currency' => 'usd',
+            'setup_future_usage' => 'on_session',
+        ]);
+
+        $cart->updatePaymentIntentId($paymentIntent->id);
+
+        return $paymentIntent;
+    }
+
     public function render(CartInterface $cart)
     {
         return view('livewire.checkout', [
             'cart' => $cart,
+            'paymentIntent' => $this->getPaymentIntent($cart),
         ]);
     }
 }

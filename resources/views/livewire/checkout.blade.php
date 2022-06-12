@@ -89,6 +89,7 @@
                 <div class="font-semibold text-lg">Payment</div>
 
                 <div>
+                    {{ $paymentIntent->client_secret }}
                     Stripe card form
                 </div>
             </div>

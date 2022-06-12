@@ -164,4 +164,20 @@ class Cart implements CartInterface
         return money($this->subtotal());
     }
 
+    public function hasPaymentIntent()
+    {
+        return ! is_null($this->getPaymentIntentId());
+    }
+
+    public function getPaymentIntentId()
+    {
+        return $this->instance()->payment_intent_id;
+    }
+
+    public function updatePaymentIntentId($paymentIntentId)
+    {
+        $this->instance()->update([
+            'payment_intent_id' => $paymentIntentId
+        ]);
+    }
 }
