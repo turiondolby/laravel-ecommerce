@@ -1,4 +1,23 @@
-<form wire:submit.prevent="checkout">
+<form
+    @submit.prevent="submit"
+    x-data="{
+        stripe: null,
+        cardElement: null,
+
+        submit () {
+            console.log('submit')
+        },
+
+        init () {
+            this.stripe = Stripe('{{ config('stripe.key') }}')
+
+            const elements = this.stripe.elements()
+            this.cardElement = elements.create('card')
+
+            this.cardElement.mount('#card-element')
+        }
+    }"
+>
     <div class="overflow-hidden sm:rounded-lg grid grid-cols-6 grid-flow-col gap-4">
         <div class="p-6 bg-white border-b border-gray-200 col-span-3 self-start space-y-6">
             @guest
@@ -89,8 +108,8 @@
                 <div class="font-semibold text-lg">Payment</div>
 
                 <div>
-                    {{ $paymentIntent->client_secret }}
-                    Stripe card form
+{{--                    {{ $paymentIntent->client_secret }}--}}
+                    <div id="card-element"></div>
                 </div>
             </div>
         </div>
