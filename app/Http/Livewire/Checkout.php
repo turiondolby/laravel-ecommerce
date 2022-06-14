@@ -172,6 +172,16 @@ class Checkout extends Component
         return $paymentIntent;
     }
 
+    public function callValidate()
+    {
+        $this->validate();
+    }
+
+    public function getErrorCount()
+    {
+        return $this->getErrorBag()->count();
+    }
+
     public function render(CartInterface $cart)
     {
         return view('livewire.checkout', [
