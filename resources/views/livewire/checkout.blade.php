@@ -22,7 +22,12 @@
             );
 
             if (error) {
-                //show error
+                window.dispatchEvent(new CustomEvent('notification', {
+                    detail: {
+                        body: error.message,
+                        timeout: 3000
+                    }
+                }))
             }
             else {
                 $wire.checkout()
