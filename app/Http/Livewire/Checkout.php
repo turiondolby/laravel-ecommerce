@@ -72,6 +72,14 @@ class Checkout extends Component
     {
         $this->validate();
 
+        if ($this->getPaymentIntent($cart)->status !== 'succeeded') {
+            $this->dispatchBrowserEvent('notification', [
+                'body' => 'Your payment failed.'
+            ]);
+
+            return;
+        }
+
         $this->shippingAddress = ShippingAddress::query();
 
         if (auth()->user()) {

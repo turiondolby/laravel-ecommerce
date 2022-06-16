@@ -25,8 +25,7 @@
                 //show error
             }
             else {
-                //grab payment intent id
-                //call checkout()
+                $wire.checkout()
             }
 
         },
